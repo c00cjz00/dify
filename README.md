@@ -16,26 +16,30 @@ wget https://raw.githubusercontent.com/c00cjz00/dify/refs/heads/main/ssl/dify.ke
 
 ## 自訂 dify 前端，建立新的 web image
 cd ~/dify
+rm -rf web_demo
+cp -rf web web_demo
 
 ## 將所有介面上的「Dify」字樣替換為「NCHC」
-sed -i 's/Dify/NCHC/g'  ./web/app/components/base/chat/chat-with-history/index.tsx
-sed -i 's/Dify/NCHC/g'  ./web/app/components/workflow/constants.ts
-sed -i 's/Dify/NCHC/g'  ./web/i18n/zh-Hant/*ts
-sed -i 's/Dify/NCHC/g'  ./web/i18n/en-US/*ts
-sed -i 's/Dify/NCHC/g'  ./web/app/layout.tsx
+sed -i 's/Dify/NCHC/g'  ./web_demo/app/components/base/chat/chat-with-history/index.tsx
+sed -i 's/Dify/NCHC/g'  ./web_demo/app/components/workflow/constants.ts
+sed -i 's/Dify/NCHC/g'  ./web_demo/i18n/zh-Hant/*ts
+sed -i 's/Dify/NCHC/g'  ./web_demo/i18n/en-US/*ts
+sed -i 's/Dify/NCHC/g'  ./web_demo/app/layout.tsx
+sed -i 's/test - Dify/test - NCHC/g' ./web_demo/hooks/use-document-title.spec.ts
+
 
 ## 下載自訂 Logo 並替換預設圖示
 mkdir -p demo
 wget "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ2fTd47USCjvhs57atGeo2iTke1IpPODNtqw&s" -O ./demo/logo-site.png
 wget "https://www.svgrepo.com/download/530572/accelerate.svg" -O ./demo/logo.svg
-cp ./demo/logo.svg ./web/public/logo/logo.svg
-cp ./demo/logo-site.png ./web/public/logo/logo.png
-cp ./demo/logo-site.png ./web/public/logo/logo-site-dark.png
-cp ./demo/logo-site.png ./web/public/logo/logo-embedded-chat-avatar.png
-cp ./demo/logo-site.png ./web/public/logo/logo-embedded-chat-header.png
+cp ./demo/logo.svg ./web_demo/public/logo/logo.svg
+cp ./demo/logo-site.png ./web_demo/public/logo/logo.png
+cp ./demo/logo-site.png ./web_demo/public/logo/logo-site-dark.png
+cp ./demo/logo-site.png ./web_demo/public/logo/logo-embedded-chat-avatar.png
+cp ./demo/logo-site.png ./web_demo/public/logo/logo-embedded-chat-header.png
 
 ## 建立新的 Docker image
-cd ~/dify/web
+cd ~/dify/web_demo
 docker build -t="c00cjz00/dify-web:1.4.3" .
 
 ## 修改 docker-compose.yaml，使用自訂前端 image
