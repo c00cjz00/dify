@@ -56,3 +56,7 @@ sed -i 's/Chinese/繁體中文(zh-TW)/g'  api_demo/prompts.py                   
 sed -i 's/你今天咋樣/你今天如何/g'  api_demo/prompts.py                               # 修改提示語句內容
 docker cp api_demo/prompts.py docker-api-1:/app/api/core/llm_generator/prompts.py     # 複製回容器
 docker restart docker-api-1                                                            # 重新啟動 API 容器以套用更改
+
+
+## 開啟連線
+https://dify2025.biobank.org.tw
