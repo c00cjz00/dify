@@ -74,3 +74,8 @@ docker cp demo/invite_member_mail_template_en-US.html docker-worker-1:/app/api/t
 docker cp demo/invite_member_mail_template_en-US.html docker-worker-1:/app/api/templates/invite_member_mail_template_zh-CN     # 複製回容器
 docker cp demo/mail_invite_member_task.py docker-worker-1:/app/api/tasks/mail_invite_member_task.py     # 複製回容器
 docker restart docker-worker-1                                                            # 重新啟動 API 容器以套用更
+
+
+
+## 開啟連線
+echo https://dify2025.biobank.org.tw
