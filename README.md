@@ -26,16 +26,16 @@ sed -i 's/Dify/NCHC/g'  ./web/app/layout.tsx
 
 ## 下載自訂 Logo 並替換預設圖示
 mkdir -p demo
-wget "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ2fTd47USCjvhs57atGeo2iTke1IpPODNtqw&s" -O ./demo/public/logo/logo-site.png
-wget "https://www.svgrepo.com/download/530572/accelerate.svg" -O ./demo/public/logo/logo.svg
-cp ./demo/public/logo/logo.svg ./demo/public/logo/logo.svg
-cp ./demo/public/logo/logo-site.png ./demo/public/logo/logo.png
-cp ./demo/public/logo/logo-site.png ./demo/public/logo/logo-site-dark.png
-cp ./demo/public/logo/logo-site.png ./demo/public/logo/logo-embedded-chat-avatar.png
-cp ./demo/public/logo/logo-site.png ./demo/public/logo/logo-embedded-chat-header.png
+wget "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ2fTd47USCjvhs57atGeo2iTke1IpPODNtqw&s" -O ./demo/logo-site.png
+wget "https://www.svgrepo.com/download/530572/accelerate.svg" -O ./demo/logo.svg
+cp ./demo/logo.svg ./web/public/logo/logo.svg
+cp ./demo/logo-site.png ./web/public/logo/logo.png
+cp ./demo/logo-site.png ./web/public/logo/logo-site-dark.png
+cp ./demo/logo-site.png ./web/public/logo/logo-embedded-chat-avatar.png
+cp ./demo/logo-site.png ./web/public/logo/logo-embedded-chat-header.png
 
 ## 建立新的 Docker image
-cd ~/dify
+cd ~/dify/web
 docker build -t="c00cjz00/dify-web:1.4.3" .
 
 ## 修改 docker-compose.yaml，使用自訂前端 image
