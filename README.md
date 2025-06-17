@@ -29,8 +29,7 @@ sed -i 's/Dify/NCHC/g'  ./web_demo/i18n/en-US/*ts
 sed -i 's/Dify/NCHC/g'  ./web_demo/app/layout.tsx
 sed -i 's/test - Dify/test - NCHC/g' ./web_demo/hooks/use-document-title.spec.ts
 sed -i 's/Dify/NCHC/g'  ./web_demo/hooks/use-document-title.ts
-sed -i "s/const isCreatedByMe = params.get('isCreatedByMe') === 'true'/const isCreatedByMe = params.get('isCreatedByMe') !== 'false'/g" ./web_demo/app/(commonLayout)/apps/hooks/useAppsQueryState.ts
-
+sed -i "s/const isCreatedByMe = params.get('isCreatedByMe') === 'true'/const isCreatedByMe = params.get('isCreatedByMe') !== 'false'/g" "./web_demo/app/(commonLayout)/apps/hooks/useAppsQueryState.ts"
 
 ## 下載自訂 Logo 並替換預設圖示
 mkdir -p demo
@@ -67,7 +66,6 @@ sed -i 's/你今天咋樣/你今天如何/g'  demo/prompts.py                   
 docker cp demo/prompts.py docker-api-1:/app/api/core/llm_generator/prompts.py     # 複製回容器
 docker restart docker-api-1                                                            # 重新啟動 API 容器以套用更改
 ```
-
 
 ## 開啟連線
 https://dify2025.biobank.org.tw
