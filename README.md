@@ -69,7 +69,7 @@ docker restart docker-api-1                                                     
 mkdir -p demo
 docker cp docker-worker-1:/app/api/templates/invite_member_mail_template_en-US.html demo/invite_member_mail_template_en-US.html  # 從容器中匯出舊檔案
 sed -i 's$href="{{ url }}"$ref="https://dify2025.biobank.org.tw{{url}}"$g'  demo/invite_member_mail_template_en-US.html           # 修改語言描述
-sed -i 's$<img src="https://assets.dify.ai/images/logo.png" alt="Dify Logo">$<img src="https://www.nchc.org.tw/UploadImage/SiteLayout/637020638716126002_thumb.png" alt="NCHC Logo">$g'  demo/invite_member_mail_template_en-US.html                               # 修改語言描述
+sed -i 's$<img src="https://assets.dify.ai/images/logo.png" alt="Dify Logo">$<img src="https://www.nchc.org.tw/UploadImage/SiteLayout/638784916208044068_thumb.png" alt="NCHC Logo">$g'  demo/invite_member_mail_template_en-US.html                               # 修改語言描述
 docker cp demo/invite_member_mail_template_en-US.html docker-worker-1:/app/api/templates/invite_member_mail_template_en-US.html   # 複製回容器
 docker cp demo/invite_member_mail_template_en-US.html docker-worker-1:/app/api/templates/invite_member_mail_template_zh-CN     # 複製回容器
 
