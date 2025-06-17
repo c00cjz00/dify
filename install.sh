@@ -28,7 +28,6 @@ sed -i 's/test - Dify/test - NCHC/g' ./web_demo/hooks/use-document-title.spec.ts
 sed -i 's/Dify/NCHC/g'  ./web_demo/hooks/use-document-title.ts
 sed -i "s/const isCreatedByMe = params.get('isCreatedByMe') === 'true'/const isCreatedByMe = params.get('isCreatedByMe') !== 'false'/g" "./web_demo/app/(commonLayout)/apps/hooks/useAppsQueryState.ts"
 
-
 ## 下載自訂 Logo 並替換預設圖示
 mkdir -p demo
 wget "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ2fTd47USCjvhs57atGeo2iTke1IpPODNtqw&s" -O ./demo/logo-site.png
@@ -64,5 +63,14 @@ sed -i 's/你今天咋樣/你今天如何/g'  demo/prompts.py                   
 docker cp demo/prompts.py docker-api-1:/app/api/core/llm_generator/prompts.py     # 複製回容器
 docker restart docker-api-1                                                            # 重新啟動 API 容器以套用更改
 
-## 開啟連結
-echo "Open url https://dify2025.biobank.org.tw/signin"
+## 修改invite_member_mail_template_en-US.html
+mkdir -p demo
+docker cp docker-worker-1:/app/api/templates/invite_member_mail_template_en-US.html demo/invite_member_mail_template_en-US.html  # 從容器中匯出舊檔案
+docker cp docker-worker-1:/app/api/tasks/mail_invite_member_task.py demo/mail_invite_member_task.py
+sed -i 's$href="{{ url }}"$ref="https://dify2025.biobank.org.tw{{url}}"$g'  demo/invite_member_mail_template_en-US.html           
+sed -i 's$<img src="https://assets.dify.ai/images/logo.png" alt="Dify Logo">$<img src="https://www.nchc.org.tw/UploadImage/SiteLayout/638784916208044068_thumb.png" alt="NCHC Logo">$g'  demo/invite_member_mail_template_en-US.html
+sed -i 's$ Dify $ NCHC $g' demo/mail_invite_member_task.py
+docker cp demo/invite_member_mail_template_en-US.html docker-worker-1:/app/api/templates/invite_member_mail_template_en-US.html   # 複製回容器
+docker cp demo/invite_member_mail_template_en-US.html docker-worker-1:/app/api/templates/invite_member_mail_template_zh-CN     # 複製回容器
+docker cp demo/mail_invite_member_task.py docker-worker-1:/app/api/tasks/mail_invite_member_task.py     # 複製回容器
+docker restart docker-worker-1                                                            # 重新啟動 API 容器以套用更
