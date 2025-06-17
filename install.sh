@@ -26,6 +26,7 @@ sed -i 's/Dify/NCHC/g'  ./web_demo/i18n/en-US/*ts
 sed -i 's/Dify/NCHC/g'  ./web_demo/app/layout.tsx
 sed -i 's/test - Dify/test - NCHC/g' ./web_demo/hooks/use-document-title.spec.ts
 sed -i 's/Dify/NCHC/g'  ./web_demo/hooks/use-document-title.ts
+sed -i "s/const isCreatedByMe = params.get('isCreatedByMe') === 'true'/const isCreatedByMe = params.get('isCreatedByMe') !== 'false'/g" "./web_demo/app/(commonLayout)/apps/hooks/useAppsQueryState.ts"
 
 
 ## 下載自訂 Logo 並替換預設圖示
