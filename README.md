@@ -15,26 +15,26 @@ wget https://raw.githubusercontent.com/c00cjz00/dify/refs/heads/main/ssl/dify.ke
 
 ## 自訂 dify 前端，建立新的 web image
 cd ~/dify
-rm -rf web_demo                      # 移除舊的 web_demo（若存在）
-cp -rf web web_demo                 # 複製原始 web 目錄為 web_demo
-# 將所有介面上的「Dify」字樣替換為「NCHC」
-sed -i 's/Dify/NCHC/g'  ./web_demo/app/components/base/chat/chat-with-history/index.tsx
-sed -i 's/Dify/NCHC/g'  ./web_demo/app/components/workflow/constants.ts
-sed -i 's/Dify/NCHC/g'  ./web_demo/i18n/zh-Hant/*ts
-sed -i 's/Dify/NCHC/g'  ./web_demo/i18n/en-US/*ts
-sed -i 's/Dify/NCHC/g'  ./web_demo/app/layout.tsx
 
-# 下載自訂 Logo 並替換預設圖示
-wget "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ2fTd47USCjvhs57atGeo2iTke1IpPODNtqw&s" -O ./web_demo/public/logo/logo-site.png
-wget "https://www.svgrepo.com/download/530572/accelerate.svg" -O ./web_demo/public/logo/logo.svg
-cp ./web_demo/public/logo/logo.svg ./web_demo/public/logo/logo.svg
-cp ./web_demo/public/logo/logo-site.png ./web_demo/public/logo/logo.png
-cp ./web_demo/public/logo/logo-site.png ./web_demo/public/logo/logo-site-dark.png
-cp ./web_demo/public/logo/logo-site.png ./web_demo/public/logo/logo-embedded-chat-avatar.png
-cp ./web_demo/public/logo/logo-site.png ./web_demo/public/logo/logo-embedded-chat-header.png
+## 將所有介面上的「Dify」字樣替換為「NCHC」
+sed -i 's/Dify/NCHC/g'  ./web/app/components/base/chat/chat-with-history/index.tsx
+sed -i 's/Dify/NCHC/g'  ./web/app/components/workflow/constants.ts
+sed -i 's/Dify/NCHC/g'  ./web/i18n/zh-Hant/*ts
+sed -i 's/Dify/NCHC/g'  ./web/i18n/en-US/*ts
+sed -i 's/Dify/NCHC/g'  ./web/app/layout.tsx
 
-# 建立新的 Docker image
-cd ./web_demo
+## 下載自訂 Logo 並替換預設圖示
+mkdir -p demo
+wget "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ2fTd47USCjvhs57atGeo2iTke1IpPODNtqw&s" -O ./demo/public/logo/logo-site.png
+wget "https://www.svgrepo.com/download/530572/accelerate.svg" -O ./demo/public/logo/logo.svg
+cp ./demo/public/logo/logo.svg ./demo/public/logo/logo.svg
+cp ./demo/public/logo/logo-site.png ./demo/public/logo/logo.png
+cp ./demo/public/logo/logo-site.png ./demo/public/logo/logo-site-dark.png
+cp ./demo/public/logo/logo-site.png ./demo/public/logo/logo-embedded-chat-avatar.png
+cp ./demo/public/logo/logo-site.png ./demo/public/logo/logo-embedded-chat-header.png
+
+## 建立新的 Docker image
+cd ~/dify
 docker build -t="c00cjz00/dify-web:1.4.3" .
 
 ## 修改 docker-compose.yaml，使用自訂前端 image
@@ -49,12 +49,12 @@ docker compose up -d              # 背景啟動所有服務
 ## 修改提示詞（prompts.py）為繁體中文版本
 sudo apt update
 sudo apt install opencc -y        # 安裝 OpenCC 工具（簡繁轉換）
-mkdir -p api_demo
-docker cp docker-api-1:/app/api/core/llm_generator/prompts.py api_demo/prompts_old.py  # 從容器中匯出舊檔案
-opencc -i api_demo/prompts_old.py -o api_demo/prompts.py -c s2twp.json                # 轉換為繁體中文（台灣）
-sed -i 's/Chinese/繁體中文(zh-TW)/g'  api_demo/prompts.py                               # 修改語言描述
-sed -i 's/你今天咋樣/你今天如何/g'  api_demo/prompts.py                               # 修改提示語句內容
-docker cp api_demo/prompts.py docker-api-1:/app/api/core/llm_generator/prompts.py     # 複製回容器
+mkdir -p demo
+docker cp docker-api-1:/app/api/core/llm_generator/prompts.py demo/prompts_old.py  # 從容器中匯出舊檔案
+opencc -i demo/prompts_old.py -o demo/prompts.py -c s2twp.json                # 轉換為繁體中文（台灣）
+sed -i 's/Chinese/繁體中文(zh-TW)/g'  demo/prompts.py                               # 修改語言描述
+sed -i 's/你今天咋樣/你今天如何/g'  demo/prompts.py                               # 修改提示語句內容
+docker cp demo/prompts.py docker-api-1:/app/api/core/llm_generator/prompts.py     # 複製回容器
 docker restart docker-api-1                                                            # 重新啟動 API 容器以套用更改
 
 
