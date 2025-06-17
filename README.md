@@ -55,6 +55,7 @@ docker compose down                # 關閉現有容器（若有）
 docker compose up -d              # 背景啟動所有服務
 
 ## 修改提示詞（prompts.py）為繁體中文版本
+sleep 30
 sudo apt update
 sudo apt install opencc -y        # 安裝 OpenCC 工具（簡繁轉換）
 mkdir -p demo
