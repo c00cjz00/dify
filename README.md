@@ -45,11 +45,11 @@ cp ./demo/logo-site.png ./web_demo/public/logo/logo-embedded-chat-header.png
 
 ## 建立新的 Docker image
 cd ~/dify/web_demo
-docker build -t="c00cjz00/dify-web:1.4.3" .
+docker build -t="c00cjz00/dify-web:1.5.0" .
 
 ## 修改 docker-compose.yaml，使用自訂前端 image
 cd ~/dify
-sed -i 's$langgenius/dify-web:1.4.3$c00cjz00/dify-web:1.4.3$g' ./docker/docker-compose.yaml
+sed -i 's$langgenius/dify-web:1.5.0$c00cjz00/dify-web:1.5.0$g' ./docker/docker-compose.yaml
 
 ## 啟動 Dify 系統（包含後端與前端）
 cd ~/dify/docker
